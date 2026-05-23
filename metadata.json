@@ -1,0 +1,6 @@
+{
+  "name": "Full-Stack API Cookbook",
+  "description": "An interactive playground and boilerplate demonstrating core API concepts: HTTP CRUD, request anatomy, status codes, CORS, and bearer token authorization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

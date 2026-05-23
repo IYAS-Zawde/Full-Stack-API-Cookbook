@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full-Stack API Cookbook - Developer Portfolio</title>
+  <!-- Tailwind CSS CDN for lightweight, elegant vanilla styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Elegant Custom Scrollbar and monospace font fixes */
+    pre, code {
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased selection:bg-teal-500 selection:text-slate-900">
+
+  <!-- Main Navigation Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-teal-500 flex items-center justify-center font-bold text-slate-950 shadow-lg shadow-teal-500/20 text-lg">
+          🍳
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight text-white">Full-Stack API Cookbook</h1>
+          <p class="text-xs text-slate-400">Frontend-to-Backend Integration Sandbox</p>
+        </div>
+      </div>
+      <div id="authStatus" class="flex items-center gap-3 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse" id="authIndicator"></span>
+        <span id="authLabel">Unauthenticated (Bearer token missing)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout Panel Grid -->
+  <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Cookbook Interactive Interactive Exercises (8 Columns) -->
+    <div class="lg:col-span-8 flex flex-col gap-8">
+      
+      <!-- Introductions Card -->
+      <section class="bg-slate-800/50 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-teal-400 mb-2">🎓 Connect Code & Wire Real HTTP Requests</h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Welcome to the **API Cookbook Integration Boilerplate**. Designed as a high-quality portfolio exhibit, this application hooks directly into a backend Express API mock layer. Interact with each panel below to execute async network requests and observe live network transmissions in the developer simulator sidebar.
+        </p>
+      </section>
+
+      <!-- 1. HTTP Methods Sandbox -->
+      <section class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 transition">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <span class="text-xs font-semibold text-teal-400 uppercase tracking-widest">Concept 1</span>
+            <h3 class="text-lg font-bold text-white mt-1">RESTful HTTP Methods (CRUD Inventory)</h3>
+          </div>
+          <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20">/api/items</span>
+        </div>
+        <p class="text-xs text-slate-400 mb-6">Demonstrates standard CREATE (POST), READ (GET), UPDATE (PUT), and DESTROY (DELETE) states targeting backend state in-memory database storage.</p>
+
+        <!-- CRUD Actions Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Fetch and Create inputs -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Item Operations</h4>
+            <div class="flex flex-wrap gap-2">
+              <button id="btnGetItems" class="px-4 py-2 text-xs font-medium bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-lg transition active:scale-95 duration-100">
+                GET All Items
+              </button>
+              <button id="btnResetItems" class="px-4 py-2 text-xs font-medium bg-slate-800/50 hover:bg-slate-800 border border-slate-800 text-slate-400 rounded-lg transition text-xs">
+                Refetch
+              </button>
+            </div>
+
+            <!-- Create Form Box -->
+            <form id="createForm" class="bg-slate-900/55 p-4 rounded-xl border border-slate-850 space-y-3">
+              <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Insert New Item (POST)</span>
+              <div class="grid grid-cols-2 gap-2">
+                <input required type="text" id="postName" placeholder="Item Name (e.g., Redux Basics)" class="col-span-2 px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-teal-500">
+                <input required type="text" id="postCategory" placeholder="Category (e.g. Frontend)" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-teal-500">
+                <select id="postDifficulty" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 focus:outline-none focus:border-teal-500">
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+              <button type="submit" class="w-full py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold rounded-lg text-xs transition active:scale-95 duration-100">
+                Execute POST Call
+              </button>
+            </form>
+          </div>
+
+          <!-- Update and Delete inputs -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider font-semibold">Mutative CRUD Targets</h4>
+            
+            <!-- Update/Delete Select -->
+            <div class="bg-slate-900/55 p-4 rounded-xl border border-slate-850 space-y-4">
+              <div>
+                <label class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Select Target Resource ID</label>
+                <div class="flex gap-2">
+                  <select id="crudTargetId" class="flex-1 px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-200">
+                    <option value="1">ID: 1 - Node.js Basics</option>
+                    <option value="2">ID: 2 - Asynchronous JavaScript</option>
+                    <option value="3">ID: 3 - Securing APIs with JWT</option>
+                  </select>
+                  <button id="btnGetSingle" type="button" class="px-3 bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 text-xs text-slate-300">
+                    GET ID
+                  </button>
+                </div>
+              </div>
+
+              <!-- Modify Details Panel -->
+              <div class="space-y-2 border-t border-slate-800/50 pt-3">
+                <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block">Replace Selected Item Properties (PUT)</span>
+                <input type="text" id="putName" placeholder="Updated Item Name" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none">
+                <div class="grid grid-cols-2 gap-2">
+                  <input type="text" id="putCategory" placeholder="Updated Category" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100 focus:outline-none">
+                  <select id="putDifficulty" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                  </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button id="btnPutItem" type="button" class="py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-lg text-xs transition duration-100">
+                    Replace (PUT)
+                  </button>
+                  <button id="btnDeleteItem" type="button" class="py-2 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-lg text-xs transition duration-100">
+                    Destroy (DELETE)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. Request Anatomy Sandbox -->
+      <section class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 transition">
+        <div class="mb-4">
+          <span class="text-xs font-semibold text-teal-400 uppercase tracking-widest">Concept 2</span>
+          <h3 class="text-lg font-bold text-white mt-1">Anatomy of a Request</h3>
+        </div>
+        <p class="text-xs text-slate-400 mb-6">Demonstrates parameter parsing paradigms on the node Express routing container. Analyze query string arguments versus resource path IDs.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Demo 2a: Query Parameters -->
+          <div class="bg-slate-900/50 border border-slate-855 rounded-xl p-4">
+            <span class="text-[10px] font-bold text-teal-400 uppercase tracking-widest bg-teal-500/15 border border-teal-500/20 px-2 py-0.5 rounded-full">Query Parameters</span>
+            <p class="text-xs text-slate-300 mt-3 mb-4">Express extracts values mapped after the `?` delimiter into `req.query` object parameters. Used for searches/filtering.</p>
+            <div class="space-y-3">
+              <input type="text" id="querySearch" placeholder="Search keyword (e.g. Async)" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100">
+              <button id="btnSearchFilter" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-xs text-white transition">
+                GET with Query Strings
+              </button>
+            </div>
+          </div>
+          
+          <!-- Demo 2b: Path Parameters -->
+          <div class="bg-slate-900/50 border border-slate-855 rounded-xl p-4">
+            <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest bg-amber-500/15 border border-amber-500/20 px-2 py-0.5 rounded-full">Path Parameters</span>
+            <p class="text-xs text-slate-300 mt-3 mb-4">Express compiles wildcards inside API paths (like `/api/items/:id`) and exposes matched integers inside the `req.params` object.</p>
+            <div class="space-y-3">
+              <input type="text" id="pathParamId" placeholder="Resource numerical ID (e.g. 2)" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-100">
+              <button id="btnPathParam" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-xs text-white transition">
+                GET with Path Params
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Status Codes Sandbox -->
+      <section class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 transition">
+        <div class="mb-4">
+          <span class="text-xs font-semibold text-teal-400 uppercase tracking-widest">Concept 3</span>
+          <h3 class="text-lg font-bold text-white mt-1">HTTP Status Codes Response Playground</h3>
+        </div>
+        <p class="text-xs text-slate-400 mb-6 font-medium">HTTP status codes are the standard protocol communications signaling if transactions failed, succeeded, or require authorization.</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <button data-code="200" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-emerald-400 font-bold font-mono text-sm">200 OK</span>
+            <span class="text-[10px] text-slate-400">Success Read/Update</span>
+          </button>
+          <button data-code="201" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-emerald-450 font-bold font-mono text-sm">201 Created</span>
+            <span class="text-[10px] text-slate-400">Success Insert</span>
+          </button>
+          <button data-code="400" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-amber-400 font-bold font-mono text-sm">400 Bad Request</span>
+            <span class="text-[10px] text-slate-400">Client validation error</span>
+          </button>
+          <button data-code="401" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-amber-500 font-bold font-mono text-sm">401 Unauthorized</span>
+            <span class="text-[10px] text-slate-400">Credentials required</span>
+          </button>
+          <button data-code="404" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-rose-400 font-bold font-mono text-sm">404 Not Found</span>
+            <span class="text-[10px] text-slate-400">Resource missing</span>
+          </button>
+          <button data-code="500" class="btnStatusCode py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex flex-col items-center gap-1">
+            <span class="text-rose-600 font-bold font-mono text-sm">500 Server Error</span>
+            <span class="text-[10px] text-slate-400">Backend crash failure</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. CORS Playground (Toggle simulations) -->
+      <section class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 transition">
+        <div class="mb-4">
+          <span class="text-xs font-semibold text-teal-400 uppercase tracking-widest">Concept 4</span>
+          <h3 class="text-lg font-bold text-white mt-1">CORS & Browser Ingress Security (Preflight)</h3>
+        </div>
+        <p class="text-xs text-slate-400 mb-6">Explore the mechanics of browser-based origins protection. CORS blocking happens at the client browser level, preventively blocking readable responses if CORS headers are absent.</p>
+
+        <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-4 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-xs font-semibold text-white">Trigger Simulation Calls</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">Test standard CORS versus error states triggered by non-matching header properties.</p>
+            </div>
+            <div class="flex gap-2">
+              <button id="btnCorsSuccess" class="px-3 py-1.5 bg-teal-500 hover:bg-teal-405 text-slate-950 font-bold text-xs rounded-lg transition">
+                Valid CORS Call
+              </button>
+              <button id="btnCorsFail" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-lg transition">
+                Simulate CORS Block
+              </button>
+            </div>
+          </div>
+          <div id="corsNote" class="text-[11px] text-slate-400 border-l-2 border-slate-700 pl-3 leading-relaxed">
+            Note: Standard headers like <code class="text-slate-300">Access-Control-Allow-Origin: *</code> enable simple connections. In production, always restrict backend origins to safe host lists.
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Bearer Auth & Guard Protected Routings -->
+      <section class="bg-slate-800/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 transition">
+        <div class="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+          <div>
+            <span class="text-xs font-semibold text-teal-400 uppercase tracking-widest">Concept 5</span>
+            <h3 class="text-lg font-bold text-white mt-1">Stateful Session Auth & Authorization Bearer JWTs</h3>
+          </div>
+          <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-center select-none">
+            JWT Header Demo
+          </span>
+        </div>
+        <p class="text-xs text-slate-400 mb-6">Submit authenticating credentials to retrieve a token key. Store this signature locally and assign it for standard transmission inside API endpoints.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Auth Steps Part A: Authenticating -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Step 1: Authenticate to Obtain Token</h4>
+            <!-- Credentials Logins -->
+            <form id="loginForm" class="bg-slate-900/50 border border-slate-800 p-4 rounded-xl space-y-3">
+              <div class="space-y-1">
+                <label class="block text-[10px] text-slate-400 uppercase">Interactive Username</label>
+                <input required type="text" id="loginUsername" value="senior_engineer" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-200">
+              </div>
+              <div class="space-y-1">
+                <label class="block text-[10px] text-slate-400 uppercase">Interactive Password</label>
+                <input required type="password" id="loginPassword" value="password123" class="w-full px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-200">
+              </div>
+              <button type="submit" class="w-full py-2 bg-indigo-500 hover:bg-indigo-450 font-semibold rounded-lg text-xs transition">
+                Exchange for Token (POST /api/login)
+              </button>
+            </form>
+          </div>
+
+          <!-- Auth Steps Part B: Utilizing protected token resource -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Step 2: Probe Auth-Protected APIs</h4>
+            <div class="bg-slate-900/50 border border-slate-800 p-4 rounded-xl space-y-4">
+              <p class="text-xs text-slate-350 leading-normal">
+                After securing a valid session credentials token, subsequent resource queries must append it on headers formatting:
+                <code class="block bg-slate-950 p-2 text-[10px] rounded mt-2 text-indigo-350">Authorization: Bearer &lt;token&gt;</code>
+              </p>
+              
+              <div class="grid grid-cols-2 gap-2 pt-2">
+                <button id="btnAccessProtected" class="py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-lg text-xs transition duration-150">
+                  Call Protected API
+                </button>
+                <button id="btnClearToken" class="py-2 bg-slate-800 hover:bg-slate-705 border border-slate-700 text-white font-medium rounded-lg text-xs transition">
+                  Logout / Reset Key
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Right Column: Simulated Web Browser Transmissions Console Sidebar (4 Columns) -->
+    <div class="lg:col-span-4 lg:sticky lg:top-24 h-fit space-y-6">
+      
+      <!-- Network Console Display Visualizer -->
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+        <!-- Console Title Header -->
+        <div class="bg-slate-900 border-b border-slate-800 py-3.5 px-4 flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+            </div>
+            <span class="text-xs font-bold text-slate-300 font-mono tracking-wider ml-2">NETWORK TRANSMISSIONS</span>
+          </div>
+          <button id="btnClearConsole" class="text-[10px] font-semibold text-slate-500 hover:text-white uppercase transition select-none">
+            Clear Logs
+          </button>
+        </div>
+
+        <!-- Details Dashboard Display screen -->
+        <div class="p-4 bg-slate-950">
+          <div class="grid grid-cols-2 gap-2 text-center text-[10px] uppercase font-mono tracking-wider mb-3">
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-800/40">
+              <div class="text-slate-500 mb-0.5">Response State</div>
+              <div id="statCode" class="text-slate-400 font-bold text-xs">-</div>
+            </div>
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-800/40">
+              <div class="text-slate-500 mb-0.5">Latency Index</div>
+              <div id="statLatency" class="text-slate-400 font-bold text-xs">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Console Logging Area -->
+        <div id="consoleLogger" class="h-[430px] overflow-y-auto px-4 pb-4 font-mono text-[11px] leading-relaxed text-slate-300 space-y-4">
+          <!-- Initial Welcome Logs -->
+          <div class="text-slate-500 border-b border-slate-900 pb-2">
+            <div>&gt; System initialized. Ready to execute dynamic endpoint queries.</div>
+            <div>&gt; Click any operation button on the left to watch live fullstack request details.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Export Notes Card -->
+      <div class="bg-slate-800/20 border border-slate-850 p-5 rounded-2xl space-y-3">
+        <h4 class="text-xs font-semibold text-teal-400 tracking-wider">📦 Standalone Export Checklist</h4>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          These elements exist on the filesystem as part of the <span class="text-slate-300 font-mono">fullstack-api-cookbook</span> GitHub repository boilerplate. Export / bundle or reference files directly:
+        </p>
+        <ul class="text-[11px] text-slate-300 space-y-1.5 list-disc pl-4 font-mono">
+          <li>/backend/server.js (Node server)</li>
+          <li>/backend/package.json (JSON configs)</li>
+          <li>/frontend/index.html (HTML)</li>
+          <li>/frontend/app.js (Async Actions)</li>
+          <li>/frontend/style.css (Tailwind assets)</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-slate-850 mt-16 py-8 text-center text-xs text-slate-500 font-medium bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-6">
+      Fullstack API Integration Cookbook • Standard Portfolio Project Sandbox
+    </div>
+  </footer>
+
+  <!-- Include App cookbook JS integrations -->
+  <script src="app.js"></script>
+</body>
+</html>
